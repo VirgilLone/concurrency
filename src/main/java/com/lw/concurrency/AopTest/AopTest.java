@@ -41,7 +41,7 @@ public class AopTest {
 
     @Before("execution(public * com.lw.concurrency.controller.TestController.*(..))")
     public void log(){
-        System.out.println("hhhahah");
+        System.out.println("又一个before");
     }
 
 }
