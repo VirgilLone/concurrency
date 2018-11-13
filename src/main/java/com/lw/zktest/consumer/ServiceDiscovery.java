@@ -12,7 +12,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 
 import java.util.List;
 
-/**
+/** zk 通过watcher服务发现
  * Created by WYluo on 2018/11/12.
  */
 public class ServiceDiscovery {
