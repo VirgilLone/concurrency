@@ -1,14 +1,11 @@
-package com.lw.zktest.consumer;
-
-import com.lw.zktest.service.ServiceRegisterImpl;
-import com.lw.zktest.service.ServiceRegistry;
+package com.lw.zktest.service;
 
 import java.io.IOException;
 
 /**
  * Created by WYluo on 2018/11/12.
  */
-public class Discovery2 {
+public class register2 {
 
     public static void main(String[] args) throws IOException {
         ServiceRegistry serviceRegistry=new ServiceRegisterImpl();
