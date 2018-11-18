@@ -1,6 +1,7 @@
 package com.lw.concurrency.AopTest;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -30,7 +31,7 @@ public class AopTest {
         ServletRequestAttributes attributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request= attributes.getRequest();
 
-        log.info("ip={}",request.getRequestURI());
+        log.info("ip={}",request.getRemoteAddr());
         log.info("url={}",request.getRequestURL());
         log.info("method={}",request.getMethod());
 
@@ -39,9 +40,9 @@ public class AopTest {
 
     }
 
-    @Before("execution(public * com.lw.concurrency.controller.TestController.*(..))")
-    public void log(){
-        System.out.println("又一个before");
+    @AfterReturning(returning = "obj",pointcut = "doSomething()")
+    public void doAfterReturning(Object obj){
+        log.info("respongse:{}",obj);
     }
 
 }
