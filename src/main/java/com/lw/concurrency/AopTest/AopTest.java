@@ -47,9 +47,9 @@ public class AopTest {
     }
 
     @Around("doSomething()")
-    public void doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long beginTime = System.currentTimeMillis();
-        joinPoint.proceed();
+        Object proceed = joinPoint.proceed();
         long endTime = System.currentTimeMillis();
 
         Signature signature = joinPoint.getSignature();
@@ -63,6 +63,7 @@ public class AopTest {
             log.warn(className + "." + methodName + ", cost: " + costTime + "ms.");
         }
 
+        return proceed;
 
     }
 
