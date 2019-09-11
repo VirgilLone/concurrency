@@ -21,7 +21,7 @@ public class ThreadTest {
         CountDownLatch threadSignal = new CountDownLatch(6);//初始化countDown
         for (int ii = 0; ii < 6; ii++) {//开threadNum个线程
 //            final Iterator<String> itt = it.get(ii);
-            Thread t = new ImportThread_advanced( threadSignal);
+            Thread t = new ImportThread_advanced(ii, threadSignal);
             t.start();
         }
         threadSignal.await();//等待所有子线程执行完

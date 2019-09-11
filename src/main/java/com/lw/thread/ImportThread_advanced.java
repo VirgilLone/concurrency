@@ -10,12 +10,22 @@ import java.util.concurrent.CountDownLatch;
 public class ImportThread_advanced extends Thread {
     private CountDownLatch threadsSignal;
 
+    private int i;
+
     public ImportThread_advanced(CountDownLatch threadsSignal) {
+        this.threadsSignal = threadsSignal;
+    }
+    public ImportThread_advanced(int i,CountDownLatch threadsSignal) {
+        this.i = i;
         this.threadsSignal = threadsSignal;
     }
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + "开始...");
+        shijieFun(i);
+    }
+
+    private void shijieFun(int i){
+        System.out.println(Thread.currentThread().getName() + "开始"+"["+i+"]"+"...");
         //todo biz
 
         threadsSignal.countDown();//线程结束时计数器减1
