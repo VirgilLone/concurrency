@@ -1,6 +1,7 @@
 package com.lw.concurrency.concurrencytest.atomic;
 
 import com.lw.concurrency.annotation.NotThreadSafe;
+import com.lw.concurrency.annotation.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -14,7 +15,7 @@ import java.util.concurrent.Semaphore;
  * @createTime: 2019/9/11
  */
 @Slf4j
-@NotThreadSafe
+@ThreadSafe
 public class CountTest {
     // 请求总数
     public static int clientTotal = 5000;
@@ -45,7 +46,7 @@ public class CountTest {
         log.info("count:{}", count);
     }
 
-    private static void add() {
+    private static synchronized void add() {
         count++;
     }
 }
