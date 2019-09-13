@@ -1,4 +1,4 @@
-package com.lw.concurrency.concurrencytest;
+package com.lw.concurrency.concurrencytest.atomic;
 
 import com.lw.concurrency.annotation.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -9,13 +9,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 /**
- * @description:
+ * @description: 线程不安全的写法
  * @author: luo.wen
  * @createTime: 2019/9/11
  */
 @Slf4j
 @NotThreadSafe
-public class ConcurrencyTest {
+public class CountTest {
     // 请求总数
     public static int clientTotal = 5000;
 
