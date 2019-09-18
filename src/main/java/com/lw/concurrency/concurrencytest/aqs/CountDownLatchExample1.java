@@ -31,8 +31,8 @@ public class CountDownLatchExample1 {
             });
         }
         //等待CountDownLatch里的计数器减到0才执行后面的语句
-        //countDownLatch.await(10, TimeUnit.MICROSECONDS);
         countDownLatch.await();
+        //countDownLatch.await(10, TimeUnit.MICROSECONDS);
         log.info("finish...");
         exec.shutdown();
     }
