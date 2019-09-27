@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CountDownLatchExample1 {
 
-    private final static int threadCount = 100;
+    private final static int threadCount = 3;
 
     public static void main(String[] args) throws Exception {
 
@@ -38,8 +38,21 @@ public class CountDownLatchExample1 {
     }
 
     private static void test(int threadNum) throws Exception {
-        Thread.sleep(100);
+        /*Thread.sleep(100);
         log.info("{}", threadNum);
-        Thread.sleep(100);
+        Thread.sleep(100);*/
+        if(threadNum==0){
+            Thread.sleep(100);
+            log.info("{}", "处理子任务1.。。");
+            Thread.sleep(100);
+        }else if(threadNum==1){
+            Thread.sleep(100);
+            log.info("{}", "处理子任务2.。。");
+            Thread.sleep(100);
+        }else if(threadNum==2){
+            Thread.sleep(100);
+            log.info("{}", "处理子任务3.。。");
+            Thread.sleep(100);
+        }
     }
 }
