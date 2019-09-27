@@ -50,9 +50,9 @@ public class CountDownLatchExample1 {
             log.info("{}", "处理子任务2.。。");
             Thread.sleep(100);
         }else if(threadNum==2){
-            Thread.sleep(100);
+            Thread.sleep(5000);
             log.info("{}", "处理子任务3.。。");
-            Thread.sleep(100);
+            Thread.sleep(5000);
         }
     }
 }
