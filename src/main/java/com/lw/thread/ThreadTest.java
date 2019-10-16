@@ -1,5 +1,7 @@
 package com.lw.thread;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.concurrent.Future;
  * @author: luo.wen
  * @createTime: 2019/9/10
  */
+@Slf4j
 public class ThreadTest {
 
     public static void main(String[] args) throws Exception {
@@ -38,25 +41,37 @@ public class ThreadTest {
         ExecutorService pool = Executors.newFixedThreadPool(taskSize);
         // 创建多个有返回值的任务
         List<Future> list = new ArrayList<Future>();
-        for (int i = 0; i < taskSize; i++) {
+        /*for (int i = 0; i < taskSize; i++) {
             Callable c = new ImportThread_callable(i + " ");
             // 执行任务并获取Future对象
             Future f = pool.submit(c);
             // System.out.println(">>>" + f.get().toString());
             list.add(f);
-        }
+        }*/
+
+        Callable c = new ImportThread_callable("hahh");
+        // 执行任务并获取Future对象
+        Future ff = pool.submit(new Callable<Object>() {
+            public Object call() throws Exception {
+                log.info("{}","第二个子任务启动...");
+                Thread.sleep(20000);
+                return "第二个子任务完成！";
+            }
+        });
+        list.add(ff);
+        Future fff = pool.submit(c);
+        list.add(fff);
         // 关闭线程池
         pool.shutdown();
 
         // 获取所有并发任务的运行结果
         for (Future f : list) {
             // 从Future对象上获取任务的返回值，并输出到控制台
-            System.out.println("---->" + f.get().toString());
+            log.info("---->线程返回结果:{}",f.get().toString());
         }
 
         Date date2 = new Date();
-        System.out.println("----程序结束运行----，程序运行时间【"
-                + (date2.getTime() - date1.getTime()) + "毫秒】");
+        log.info("----程序结束运行----，程序运行时间【{}毫秒】",date2.getTime() - date1.getTime());
     }
 
     private static void test3() throws InterruptedException {
