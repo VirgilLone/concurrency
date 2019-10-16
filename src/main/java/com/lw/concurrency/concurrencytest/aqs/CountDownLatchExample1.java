@@ -44,15 +44,18 @@ public class CountDownLatchExample1 {
         if(threadNum==0){
             Thread.sleep(100);
             log.info("{}", "处理子任务1.。。");
-            Thread.sleep(100);
+            Thread.sleep(10000);
+            log.info("{}", "子任务1完成");
         }else if(threadNum==1){
             Thread.sleep(100);
             log.info("{}", "处理子任务2.。。");
-            Thread.sleep(100);
+            Thread.sleep(5000);
+            log.info("{}", "子任务2完成");
         }else if(threadNum==2){
-            Thread.sleep(5000);
+            Thread.sleep(100);
             log.info("{}", "处理子任务3.。。");
-            Thread.sleep(5000);
+            Thread.sleep(8000);
+            log.info("{}", "子任务3完成");
         }
     }
 }
