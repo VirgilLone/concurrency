@@ -29,5 +29,6 @@ public class TimerTest implements CommandLineRunner {
                 System.out.println(System.currentTimeMillis()+"<-----"+Thread.currentThread().getName());
             }
         }, new Date(), 2000);
+        System.out.println("main线程的代码。。。。。");
     }
 }

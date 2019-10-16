@@ -20,10 +20,10 @@ public class ImportThread_callable implements Callable {
     public Object call() throws Exception {
         System.out.println(">>>" + taskNum + "任务启动");
         Date dateTmp1 = new Date();
-        Thread.sleep(1000);
+        Thread.sleep(10000);
         Date dateTmp2 = new Date();
         long time = dateTmp2.getTime() - dateTmp1.getTime();
-        System.out.println(">>>" + taskNum + "任务终止");
+        System.out.println(">>>" + taskNum + "任务完成");
         return taskNum +"("+Thread.currentThread().getName()+")" +"任务返回运行结果,当前任务时间【" + time + "毫秒】";
     }
 }
