@@ -54,7 +54,7 @@ public class ThreadTest {
         Future ff = pool.submit(new Callable<Object>() {
             public Object call() throws Exception {
                 log.info("{}","第二个子任务启动...");
-                Thread.sleep(20000);
+                Thread.sleep(10000);
                 return "第二个子任务完成！";
             }
         });
@@ -66,6 +66,9 @@ public class ThreadTest {
 
         // 获取所有并发任务的运行结果
         for (Future f : list) {
+            /*if("第二个子任务完成！".equals(f.get())){
+                System.out.println("888888");
+            }*/
             // 从Future对象上获取任务的返回值，并输出到控制台
             log.info("---->线程返回结果:{}",f.get().toString());
         }

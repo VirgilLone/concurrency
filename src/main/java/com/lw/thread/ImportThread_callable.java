@@ -23,7 +23,7 @@ public class ImportThread_callable implements Callable {
     public Object call() throws Exception {
         log.info(">>>{}任务启动...",taskNum);
         Date dateTmp1 = new Date();
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         Date dateTmp2 = new Date();
         long time = dateTmp2.getTime() - dateTmp1.getTime();
         log.info(">>>{}任务完成",taskNum);
