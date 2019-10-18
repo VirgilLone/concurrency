@@ -64,7 +64,7 @@ public class ThreadTest {
         // 关闭线程池
         pool.shutdown();
 
-        // 获取所有并发任务的运行结果
+        // 获取所有并发任务的运行结果 可以在程序任何地点尝试去获取线程返回给Future的数据
         for (Future f : list) {
             /*if("第二个子任务完成！".equals(f.get())){
                 System.out.println("888888");
