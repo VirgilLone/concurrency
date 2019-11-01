@@ -51,12 +51,10 @@ public class ThreadTest {
 
         Callable c = new ImportThread_callable("hahh");
         // 执行任务并获取Future对象
-        Future ff = pool.submit(new Callable<Object>() {
-            public Object call() throws Exception {
-                log.info("{}","第二个子任务启动...");
-                Thread.sleep(10000);
-                return "第二个子任务完成！";
-            }
+        Future ff = pool.submit(()->{
+            log.info("{}","第二个子任务启动...");
+            Thread.sleep(10000);
+            return "第二个子任务完成！";
         });
         list.add(ff);
         Future fff = pool.submit(c);
