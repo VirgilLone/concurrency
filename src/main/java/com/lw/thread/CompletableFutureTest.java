@@ -56,7 +56,7 @@ public class CompletableFutureTest {
             return  value;
         });*/
 
-        CompletableFuture<String> ref3= CompletableFuture.supplyAsync(()->{
+        CompletableFuture<Void> ref3= CompletableFuture.supplyAsync(()->{
             try {
                 log.info(Thread.currentThread().getName()+"：开始执行任务3。。。");
                 Thread.sleep(5000);
@@ -65,7 +65,7 @@ public class CompletableFutureTest {
             }
             log.info(Thread.currentThread().getName()+"：任务3完成");
             return null;
-        });
+        }).thenRunAsync(() -> System.out.println("hello world"));   //对上一步的计算结果不关心，执行下一个操作
 
 //        Thread.sleep(10000);
         log.info("{}---->{}",Thread.currentThread().getName(),ref2.get());
