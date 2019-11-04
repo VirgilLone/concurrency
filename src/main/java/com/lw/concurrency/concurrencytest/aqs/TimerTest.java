@@ -1,5 +1,6 @@
 package com.lw.concurrency.concurrencytest.aqs;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,8 @@ import java.util.TimerTask;
  * @author: luo.wen
  * @createTime: 2019/9/24
  */
-@Component
+//@Component
+@Slf4j
 public class TimerTest implements CommandLineRunner {
 
     @Override
@@ -26,9 +28,9 @@ public class TimerTest implements CommandLineRunner {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(System.currentTimeMillis()+"<-----"+Thread.currentThread().getName());
+                log.info(System.currentTimeMillis()+"<-----"+Thread.currentThread().getName());
             }
         }, new Date(), 2000);
-        System.out.println("main线程的代码。。。。。");
+        log.info("main线程的代码。。。。。");
     }
 }

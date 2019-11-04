@@ -30,11 +30,11 @@ public class CompletableFutureTest {
 //                String remoteRes = HttpUtils.get("");
                 log.info(Thread.currentThread().getName()+"：开始执行任务2。。。");
                 Thread.sleep(10000);
+                log.info(Thread.currentThread().getName()+"：任务2完成");
                 return "OK";
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            log.info(Thread.currentThread().getName()+"：任务2完成");
             return "ERROR";
         });
         CompletableFuture<String> ref2_1=ref2.thenApplyAsync(value->{
