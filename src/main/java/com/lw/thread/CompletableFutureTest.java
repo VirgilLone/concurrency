@@ -36,8 +36,17 @@ public class CompletableFutureTest {
                 e.printStackTrace();
             }
             return "ERROR";
+        }).thenApplyAsync(value->{
+            log.info(Thread.currentThread().getName()+"：运行任务2的子任务。。。");
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            log.info(Thread.currentThread().getName()+"：任务2的子任务也完成");
+            return  value;
         });
-        CompletableFuture<String> ref2_1=ref2.thenApplyAsync(value->{
+        /*CompletableFuture<String> ref2_1=ref2.thenApplyAsync(value->{
             log.info(Thread.currentThread().getName()+"：运行任务2的子任务。。。");
             try {
                 Thread.sleep(10000);
@@ -45,7 +54,7 @@ public class CompletableFutureTest {
                 e.printStackTrace();
             }
             return  value;
-        });
+        });*/
 
         CompletableFuture<String> ref3= CompletableFuture.supplyAsync(()->{
             try {
@@ -59,7 +68,7 @@ public class CompletableFutureTest {
         });
 
 //        Thread.sleep(10000);
-        log.info("{}---->{}",Thread.currentThread().getName(),ref2_1.get());
+        log.info("{}---->{}",Thread.currentThread().getName(),ref2.get());
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
