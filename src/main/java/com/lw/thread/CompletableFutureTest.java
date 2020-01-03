@@ -30,16 +30,18 @@ public class CompletableFutureTest {
         CompletableFuture<String> ref2= CompletableFuture.supplyAsync(()->{
             try {
                 log.info(Thread.currentThread().getName()+"：开始执行任务2。。。");
-//                String remoteRes = HttpUtils.get("http://localhost:8080/api/find_all_yinyue");
+                String remoteRes = HttpUtils.get("http://localhost:8080/api/find_all_yinyue");
                 Thread.sleep(5000);
                 log.info(Thread.currentThread().getName()+"：任务2完成");
                 return "SUCCESS";
             } catch (Exception e) {
                 e.printStackTrace();
+                return e;
             }
-            return "ERROR";
+//            return "ERROR";
         },pool).thenApplyAsync(value->{
-            if(value!="SUCCESS"){
+            if(!"SUCCESS".equals(value)){
+                log.error("任务2 出现异常！");
                 return "rpc error";
             }
             log.info(Thread.currentThread().getName()+"：运行任务2的子任务。。。");
@@ -52,15 +54,6 @@ public class CompletableFutureTest {
             return  value;
         },pool).thenApplyAsync((v2)-> v2+"666",pool);
         log.info("插入主线程继续毫无相关的任务1111。。。。。。。");
-        /*CompletableFuture<String> ref2_1=ref2.thenApplyAsync(value->{
-            log.info(Thread.currentThread().getName()+"：运行任务2的子任务。。。");
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return  value;
-        });*/
 
         CompletableFuture<Void> ref3= CompletableFuture.supplyAsync(()->{
             try {
