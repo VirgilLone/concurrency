@@ -1,11 +1,13 @@
 package com.lw.thread;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -14,9 +16,13 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 public class CompletableFutureTest {
-    static ExecutorService pool = Executors.newCachedThreadPool();
 
+    /** ref1、ref2、ref3同时执行，ref2的子任务在ref2完成后执行
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public  static void asyncCallback4() throws ExecutionException, InterruptedException {
+        ExecutorService pool = Executors.newCachedThreadPool();
         CompletableFuture<Void> ref1=  CompletableFuture.runAsync(()->{
             try {
                 log.info(Thread.currentThread().getName()+"：开始执行任务1。。。");
@@ -72,6 +78,62 @@ public class CompletableFutureTest {
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        asyncCallback4();
+//        asyncCallback4();
+        asyncCallback();
     }
+
+    /**
+     * 两个任务并发任务都完成后，取结果继续执行
+     */
+    public  static void asyncCallback()  {
+        ExecutorService pool = Executors.newCachedThreadPool();
+        CompletableFuture<Void> a=  CompletableFuture.runAsync(()->{
+            try {
+                log.info("开始执行任务A。。。");
+                TimeUnit.SECONDS.sleep(10);
+//                Thread.sleep(8000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            log.info("：任务A完成");
+        },pool);
+
+        CompletableFuture<Void> b= CompletableFuture.supplyAsync(()->{
+            try {
+                log.info("开始执行任务B。。。");
+                Thread.sleep(8000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            log.info("任务B完成");
+            return null;
+        },pool);
+
+        // a+b同时执行完毕之后 --> 取两个任务的结果，main线程继续往后执行
+        // 后续的处理不需要返回值: a.thenAcceptBoth(b, (resultA, resultB) -> {});
+        CompletableFuture<String> stringCompletableFuture = a.thenCombine(b, (resultA, resultB) -> "result A + B").thenApplyAsync(r->{
+            System.out.println(r);
+            if(!StringUtils.isEmpty(r)){
+                log.info("succccccc");
+                return "success";
+            }
+            log.error("occur error");
+            return "error";
+        },pool);
+
+        log.info("other...");
+
+        try {
+            log.info("拿到最终返回值--》"+stringCompletableFuture.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        log.info("test end...");
+
+        pool.shutdown();
+    }
+
+
 }
