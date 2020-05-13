@@ -19,7 +19,7 @@ public class ExceptionHandle {
     public ServerResponse handle(Exception e){
         if(e instanceof BizException){
             BizException bizException= (BizException) e;
-            log.error("【系统异常1】{}",bizException);
+            log.error("【系统异常1】{}",bizException.getMessage());
             return ServerResponse.fail(bizException.getCode(),bizException.getMessage());
         }else{
             log.error("【系统异常】{}",e);
