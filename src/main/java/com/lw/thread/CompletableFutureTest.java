@@ -3,6 +3,7 @@ package com.lw.thread;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -79,7 +80,8 @@ public class CompletableFutureTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 //        asyncCallback4();
-        asyncCallback();
+//        asyncCallback();
+        asyncCallback2();
     }
 
     /**
@@ -97,7 +99,6 @@ public class CompletableFutureTest {
             }
             log.info("：任务A完成");
         },pool);
-
         CompletableFuture<Void> b= CompletableFuture.supplyAsync(()->{
             try {
                 log.info("开始执行任务B。。。");
@@ -134,6 +135,58 @@ public class CompletableFutureTest {
 
         pool.shutdown();
     }
+
+    /**
+     * anyOf allOf
+     */
+    public  static void asyncCallback2()  {
+        ExecutorService pool = Executors.newCachedThreadPool();
+        CompletableFuture<Void> a=  CompletableFuture.runAsync(()->{
+            try {
+                log.info("开始执行任务A。。。");
+                TimeUnit.SECONDS.sleep(10);
+//                Thread.sleep(8000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            log.info("：任务A完成");
+        },pool);
+        CompletableFuture<String> b= CompletableFuture.supplyAsync(()->{
+            try {
+                log.info("开始执行任务B。。。");
+                Thread.sleep(5000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            log.info("任务B完成");
+            return "666";
+        },pool);
+        CompletableFuture<Void> c =  CompletableFuture.runAsync(()->{
+            try {
+                log.info("开始执行任务c。。。");
+                TimeUnit.SECONDS.sleep(8);
+                throw new IOException();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            log.info("任务c完成");
+        },pool);
+
+       /*// 只要有任意一个 CompletableFuture 实例执行完成就执行
+        CompletableFuture<Object> future = CompletableFuture.anyOf(a, b, c);
+        // 返回最先完成的任务的结果
+        Object result = future.join();
+        log.info(result.toString());*/
+
+        CompletableFuture<Void> future = CompletableFuture.allOf(a, b, c);
+        // join() 将阻塞，直到所有的任务执行结束
+        future.join();
+
+        log.info("test end...");
+
+        pool.shutdown();
+    }
+
 
 
 }
