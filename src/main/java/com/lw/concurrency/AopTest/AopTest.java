@@ -32,11 +32,12 @@ public class AopTest {
     @Before("doSomething()")
     public void doBefore(JoinPoint joinPoint){
         ServletRequestAttributes attributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
         HttpServletRequest request= attributes.getRequest();
 
         log.info("ip={}",request.getRemoteAddr());
         log.info("url={}",request.getRequestURL());
-        log.info("类方法={}",joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName());
+        log.info("方法完整路径：{}",joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName());
         log.info("args={}",joinPoint.getArgs());
 
     }

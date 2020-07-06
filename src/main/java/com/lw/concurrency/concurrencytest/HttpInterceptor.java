@@ -12,7 +12,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("------->preHandle");
+        log.info("-------> HandlerInterceptorAdapter.preHandle()");
         return true;
     }
     /**
@@ -26,7 +26,6 @@ public class HttpInterceptor extends HandlerInterceptorAdapter{
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         RequestHolder.remove();
-        log.info("-------->afterCompletion");
-        return;
+        log.info("-------->HandlerInterceptorAdapter.afterCompletion()");
     }
 }

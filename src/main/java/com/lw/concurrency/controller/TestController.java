@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
+/** http请求执行顺序：
+ *  Filter.doFilter() --> HandlerInterceptorAdapter.preHandle() --> aop @Around --> @Around proceed() --> @Before --> @Around --> @AfterReturning
+ *  --> HandlerInterceptorAdapter.afterCompletion() .
  * Created by WYluo on 2018/5/27.
  */
 @RestController
