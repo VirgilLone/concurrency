@@ -25,11 +25,11 @@ public class AopTest {
     private Logger log= LoggerFactory.getLogger(AopTest.class);
 
     @Pointcut("execution(public * com.lw.concurrency.controller.TestController.*(..))")
-    public void doSomething(){
+    public void log_point(){
         System.out.println("此处为一个切点。。。");
     }
 
-    @Before("doSomething()")
+    @Before("log_point()")
     public void doBefore(JoinPoint joinPoint){
         ServletRequestAttributes attributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
@@ -42,12 +42,12 @@ public class AopTest {
 
     }
 
-    @AfterReturning(returning = "obj",pointcut = "doSomething()")
+    @AfterReturning(returning = "obj",pointcut = "log_point()")
     public void doAfterReturning(Object obj){
         log.info("respongse:{}",obj);
     }
 
-    @Around("doSomething()")
+    @Around("log_point()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long beginTime = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
