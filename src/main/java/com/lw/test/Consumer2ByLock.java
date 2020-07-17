@@ -5,18 +5,18 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
-public class ConsumerByLock implements Runnable{
+public class Consumer2ByLock implements Runnable{
 
     private Queue<String> msg;
     private int maxSize;
     private Lock lock;
     private Condition condition;
 
-    public ConsumerByLock(Queue<String> msg, int maxSize) {
+    public Consumer2ByLock(Queue<String> msg, int maxSize) {
         this.msg = msg;
         this.maxSize = maxSize;
     }
-    public ConsumerByLock(Queue<String> msg, int maxSize, Lock lock, Condition condition) {
+    public Consumer2ByLock(Queue<String> msg, int maxSize, Lock lock, Condition condition) {
         this.msg = msg;
         this.maxSize = maxSize;
         this.lock = lock;
@@ -43,7 +43,7 @@ public class ConsumerByLock implements Runnable{
                     e.printStackTrace();
                 }
 
-                System.out.println("消费者1消费："+msg.remove());
+                System.out.println("消费者2消费："+msg.remove());
 //                msg.notify();
                 condition.signal(); //条件队列的尾节点加入到aqs的同步队列，唤醒并加入到锁竞争acquireQueued，得到锁才能从await方法返回
 //            }

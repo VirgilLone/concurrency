@@ -49,9 +49,9 @@ public class ProducerByLock implements Runnable{
                 }
 
                 msg.add("消息"+i);
-                System.out.println("生产者生产消息"+i);
+                System.out.println("生产者"+ Thread.currentThread().getName()+"生产消息"+i);
 //                msg.notify();
-                condition.signal(); //条件队列的尾结点转移到aqs的同步队列，唤醒并加入到锁竞争acquireQueued，得到锁才能从await方法返回
+                condition.signal(); //条件队列的尾节点加入到aqs的同步队列，唤醒并加入到锁竞争acquireQueued，得到锁才能从await方法返回
 //            }
             lock.unlock();
         }
