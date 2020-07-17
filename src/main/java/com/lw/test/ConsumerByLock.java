@@ -31,7 +31,7 @@ public class ConsumerByLock implements Runnable{
                 while (msg.isEmpty()){
                     try {
 //                        msg.wait();
-                        condition.await();
+                        condition.await(); // 阻塞线程并释放锁 state--->0 加入到condition条件队列
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -45,7 +45,7 @@ public class ConsumerByLock implements Runnable{
 
                 System.out.println("消费者消费："+msg.remove());
 //                msg.notify();
-                condition.signal();
+                condition.signal(); //条件队列的尾结点转移到aqs的同步队列，唤醒并加入到锁竞争acquireQueued，得到锁才能从await方法返回
 //            }
             lock.unlock();
 
