@@ -1,23 +1,22 @@
-package com.lw.test;
+package com.lw.concurrency.concurrencytest.lock;
 
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
-public class ProducerByLock implements Runnable{
+public class Consumer2ByLock implements Runnable{
 
     private Queue<String> msg;
     private int maxSize;
     private Lock lock;
     private Condition condition;
 
-    public ProducerByLock(Queue<String> msg, int maxSize) {
+    public Consumer2ByLock(Queue<String> msg, int maxSize) {
         this.msg = msg;
         this.maxSize = maxSize;
     }
-
-    public ProducerByLock(Queue<String> msg, int maxSize, Lock lock, Condition condition) {
+    public Consumer2ByLock(Queue<String> msg, int maxSize, Lock lock, Condition condition) {
         this.msg = msg;
         this.maxSize = maxSize;
         this.lock = lock;
@@ -26,16 +25,12 @@ public class ProducerByLock implements Runnable{
 
     @Override
     public void run() {
-        int i=0;
-
         while (true){
-            i++;
 //            synchronized (msg){
             lock.lock();
-                while (msg.size()==maxSize){
-                    // 生产满了，阻塞当前生产者线程
+                while (msg.isEmpty()){
                     try {
-//                        msg.wait(); // wait一定会释放锁
+//                        msg.wait();
                         condition.await(); // 阻塞线程并释放锁 state--->0 加入到condition条件队列
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -48,14 +43,13 @@ public class ProducerByLock implements Runnable{
                     e.printStackTrace();
                 }
 
-                msg.add("消息"+i);
-                System.out.println("生产者"+ Thread.currentThread().getName()+"生产消息"+i);
+                System.out.println("消费者2消费："+msg.remove());
 //                msg.notify();
                 condition.signal(); //条件队列的尾节点加入到aqs的同步队列，唤醒并加入到锁竞争acquireQueued，得到锁才能从await方法返回
 //            }
             lock.unlock();
-        }
 
+        }
 
     }
 }

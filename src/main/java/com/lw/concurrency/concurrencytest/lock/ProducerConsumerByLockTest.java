@@ -1,4 +1,4 @@
-package com.lw.test;
+package com.lw.concurrency.concurrencytest.lock;
 
 import com.google.common.collect.Lists;
 

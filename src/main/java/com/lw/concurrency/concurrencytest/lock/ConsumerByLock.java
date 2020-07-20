@@ -1,4 +1,4 @@
-package com.lw.test;
+package com.lw.concurrency.concurrencytest.lock;
 
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
