@@ -1,4 +1,4 @@
-package com.lw.concurrency.concurrencytest.singleton;
+package com.lw.concurrency.designpattern.singleton;
 
 
 import com.lw.concurrency.annotation.NotThreadSafe;
@@ -30,8 +30,10 @@ public class SingletonExample4 {
 
     // 静态的工厂方法
     public static SingletonExample4 getInstance() {
+        // 第一次检查是是否需要阻塞
         if (instance == null) { // 双重检测机制        // B
             synchronized (SingletonExample4.class) { // 同步锁
+                // 第二次检查是是否要重新创建实例
                 if (instance == null) {
                     instance = new SingletonExample4(); // A - 3
                 }

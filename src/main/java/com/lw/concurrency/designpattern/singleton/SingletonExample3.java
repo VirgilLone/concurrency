@@ -1,4 +1,4 @@
-package com.lw.concurrency.concurrencytest.singleton;
+package com.lw.concurrency.designpattern.singleton;
 
 import com.lw.concurrency.annotation.NotRecommend;
 import com.lw.concurrency.annotation.ThreadSafe;
