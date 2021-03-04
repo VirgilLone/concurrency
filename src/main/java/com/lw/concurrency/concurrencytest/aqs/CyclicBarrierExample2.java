@@ -35,7 +35,7 @@ public class CyclicBarrierExample2 {
         log.info("{} is ready", threadNum);
         try {
             // 支持传入等待时间
-            barrier.await(2000, TimeUnit.MILLISECONDS);
+            barrier.await(5000, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             log.warn("BarrierException", e);
         }
