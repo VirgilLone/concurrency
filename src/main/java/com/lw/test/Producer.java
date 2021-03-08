@@ -37,6 +37,8 @@ public class Producer implements Runnable{
 
                 msg.add("消息"+i);
                 System.out.println("生产者生产消息"+i);
+                // 唤醒处于阻塞状态下的线程，这里就是消费者线程
+                // （从等待队列中唤醒线程然后迁移到同步队列，准备抢占锁）
                 msg.notify();
             }
         }

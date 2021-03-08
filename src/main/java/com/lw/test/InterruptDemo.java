@@ -32,6 +32,6 @@ public class InterruptDemo implements Runnable{
         Thread thread = new Thread(new InterruptDemo());
         thread.start();
         TimeUnit.SECONDS.sleep(2);
-        thread.interrupt();// interrupt -->true
+        thread.interrupt();// 共享变量interrupt -->true、唤醒处于阻塞状态的线程
     }
 }
