@@ -33,10 +33,10 @@ public class ProducerByLock implements Runnable{
 //            synchronized (msg){
             lock.lock();
                 while (msg.size()==maxSize){
-                    // 生产满了，阻塞当前生产者线程
+                    // 生产满了，阻塞当前生产者线程，等待条件满足signal()
                     try {
 //                        msg.wait(); // wait一定会释放锁
-                        condition.await(); // 阻塞线程并释放锁 state--->0 加入到condition条件队列
+                        condition.await(); // 阻塞线程并释放锁 state--->0 加入到condition条件队列中等待条件的出现
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
