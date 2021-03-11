@@ -51,8 +51,9 @@ public class ArrayQueue {
         }
 
         int value = array[pollIndex];
-        pollIndex = (pollIndex + 1) % array.length;
+        //array[pollIndex] = 0;// 清除该数组元素
 
+        pollIndex = (pollIndex + 1) % array.length;
         size--;
 
         return value;
