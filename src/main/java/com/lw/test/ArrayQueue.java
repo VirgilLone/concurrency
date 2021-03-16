@@ -1,7 +1,7 @@
 package com.lw.test;
 
 /**
- * 数组实现的简单有界队列
+ * 数组实现的简单有界队列（只适合单线程环境）
  */
 public class ArrayQueue {
 
@@ -20,6 +20,7 @@ public class ArrayQueue {
     private int[] array;
     private int offerIndex;//入指针，指向下一个入队列的位置
     private int pollIndex;//出指针，指向下一个出队列的位置
+    //防止写指针和读指针重叠的时候，无法分清队列到底是满了还是空的状态，一般会再添加一个size字段
     private int size;
 
     public ArrayQueue(int capacity) {
